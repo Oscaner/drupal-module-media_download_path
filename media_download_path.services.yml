@@ -1,0 +1,12 @@
+services:
+  media_download_path.deny_cacheable_binary_file_response:
+    class: Drupal\media_download_path\PageCache\ResponsePolicy\DenyCacheableBinaryFileResponse
+    public: false
+    tags:
+      - { name: page_cache_response_policy }
+      - { name: dynamic_page_cache_response_policy }
+  media_download_path.twig_extension:
+    class: Drupal\media_download_path\MediaDownloadPathTwigExtension
+    arguments: ['@language_manager']
+    tags:
+      - { name: twig.extension }

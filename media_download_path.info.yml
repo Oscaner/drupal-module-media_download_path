@@ -1,0 +1,9 @@
+name: 'Media download alias'
+type: module
+description: 'This module provides to rename Media Entity Download links.'
+core_version_requirement: ^8.8 || ^9
+package: Media
+dependencies:
+  - drupal:path
+  - drupal:path_alias
+  - media_entity_download:media_entity_download

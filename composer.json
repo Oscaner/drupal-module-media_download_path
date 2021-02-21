@@ -1,0 +1,21 @@
+{
+    "name": "drupal/media_download_path",
+    "type": "drupal-module",
+    "authors": [
+        {
+            "name": "Kang Miao",
+            "email": "kang@ciandt.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "drupal/media_entity_download": "^2.0"
+    },
+    "extra": {
+        "patches": {
+            "drupal/media_entity_download": {
+                "https://drupal.org/node/3176548": "https://www.drupal.org/files/issues/2020-10-13/3176548-2.patch"
+            }
+        }
+    }
+}
