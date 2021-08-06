@@ -51,15 +51,12 @@ function media_download_path_media_download_response_alter(Response &$response, 
     return;
   }
 
+  $content_disposition = $response->headers->get('Content-Disposition');
+
   $response = new CacheableBinaryFileResponse($context['uri'], Response::HTTP_OK, $context['headers'], $context['scheme'] !== 'private');
 
-  // Default disposition is attachment.
-  if (empty($headers['Content-Disposition'])) {
-    $response->setContentDisposition(
-      ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-      $context['filename']
-    );
-  }
+  // Restore Content-Disposition header.
+  $response->headers->set('Content-Disposition', $content_disposition);
 
   // Set max age for media download response.
   $max_age = \Drupal::configFactory()->get('system.performance')->get('cache.page.max_age');
@@ -75,10 +72,7 @@ function media_download_path_media_download_response_alter(Response &$response, 
     $entity_usage = \Drupal::service('entity_usage.usage');
 
     // If entity usage enabled, we think the media should inline on the web page.
-    $response->setContentDisposition(
-      ResponseHeaderBag::DISPOSITION_INLINE,
-      $context['filename']
-    );
+    $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_INLINE);
 
     // Add media source usages' cache information into the media response.
     if (isset($context['media'])) {
@@ -88,6 +82,7 @@ function media_download_path_media_download_response_alter(Response &$response, 
         $entity && $response->addCacheableDependency($entity);
       }
     }
+
     // Add file source usages' cache information into the media response.
     if (isset($context['file'])) {
       $usages = $entity_usage->listSources($context['file'], FALSE);
