@@ -1,6 +1,8 @@
 {
     "name": "drupal/media_download_path",
+    "description": "This module provides to rename Media Entity Download links.",
     "type": "drupal-module",
+    "license": "GPL-2.0-or-later",
     "authors": [
         {
             "name": "Kang Miao",
